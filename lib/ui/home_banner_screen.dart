@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:wan_android_flutter/model/index_banner_list.dart';
+import 'package:wan_android_flutter/model/index_banner_bean.dart';
 import 'package:wan_android_flutter/network/Address.dart';
 import 'package:wan_android_flutter/network/DataHelper.dart';
 import 'package:wan_android_flutter/network/HttpManager.dart';
@@ -17,7 +17,7 @@ class HomeBannerScreen  extends StatefulWidget {
 }
 
 class HomeBannerState extends State<HomeBannerScreen> {
-  List<Data> _bannerList = new List();
+  List<IndexBannerData> _bannerList = new List();
 
   @override
   void initState() {
@@ -35,10 +35,10 @@ class HomeBannerState extends State<HomeBannerScreen> {
   Future _getBannerList() async {
     ResultData resultData = new HttpManager()
         .get(Address.INDEX_BANNER_LIST, DataHelper.getBaseMap());
-    IndexBannerList indexBannerList = IndexBannerList.fromJson(resultData.data);
-    if (indexBannerList.data.length > 0) {
+    IndexBannerBean indexBannerBean = IndexBannerBean.fromJson(resultData.data);
+    if (indexBannerBean.data.length > 0) {
       setState(() {
-        _bannerList.addAll(indexBannerList.data);
+        _bannerList.addAll(indexBannerBean.data);
       });
     }
   }

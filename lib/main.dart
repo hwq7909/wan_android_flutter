@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wan_android_flutter/common/router_config.dart';
-import 'package:wan_android_flutter/model/index_banner_list.dart';
 import 'package:wan_android_flutter/network/Address.dart';
 import 'package:wan_android_flutter/network/DataHelper.dart';
 import 'package:wan_android_flutter/network/HttpManager.dart';
