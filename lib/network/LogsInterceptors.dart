@@ -5,7 +5,8 @@ class LogsInterceptors extends InterceptorsWrapper {
   @override
   onRequest(RequestOptions options) async {
     print("请求baseUrl:${options.baseUrl}");
-    print("请求url:${options.path}");
+    print("请求url:${options.baseUrl}${options.path}");
+    print("请求接口:${options.path}");
     print('请求头：' + options.headers.toString());
     if (options.data != null) {
       print('请求参数：' + options.data.toString());
