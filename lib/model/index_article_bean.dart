@@ -130,7 +130,7 @@ class IndexArticleData extends Object {
   String superChapterName;
 
   @JsonKey(name: 'tags')
-  List<dynamic> tags;
+  List<IndexArticleTags> tags;
 
   @JsonKey(name: 'title')
   String title;
@@ -147,11 +147,32 @@ class IndexArticleData extends Object {
   @JsonKey(name: 'zan')
   int zan;
 
-  IndexArticleData(this.apkLink,this.audit,this.author,this.chapterId,this.chapterName,this.collect,this.courseId,this.desc,this.envelopePic,this.fresh,this.id,this.link,this.niceDate,this.niceShareDate,this.origin,this.prefix,this.projectLink,this.publishTime,this.selfVisible,this.shareDate,this.shareUser,this.superChapterId,this.superChapterName,this.tags,this.title,this.type,this.userId,this.visible,this.zan,);
+  @JsonKey(name: 'top')
+  bool top;
+
+  IndexArticleData(this.apkLink,this.audit,this.author,this.chapterId,this.chapterName,this.collect,this.courseId,this.desc,this.envelopePic,this.fresh,this.id,this.link,this.niceDate,this.niceShareDate,this.origin,this.prefix,this.projectLink,this.publishTime,this.selfVisible,this.shareDate,this.shareUser,this.superChapterId,this.superChapterName,this.tags,this.title,this.type,this.userId,this.visible,this.zan,this.top,);
 
   factory IndexArticleData.fromJson(Map<String, dynamic> srcJson) => _$IndexArticleDataFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$IndexArticleDataToJson(this);
+
+}
+
+
+@JsonSerializable()
+class IndexArticleTags extends Object {
+
+  @JsonKey(name: 'name')
+  String name;
+
+  @JsonKey(name: 'url')
+  String url;
+
+  IndexArticleTags(this.name,this.url,);
+
+  factory IndexArticleTags.fromJson(Map<String, dynamic> srcJson) => _$IndexArticleTagsFromJson(srcJson);
+
+  Map<String, dynamic> toJson() => _$IndexArticleTagsToJson(this);
 
 }
 

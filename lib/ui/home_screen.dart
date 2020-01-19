@@ -4,6 +4,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:wan_android_flutter/model/index_article_bean.dart';
 import 'package:wan_android_flutter/model/index_banner_bean.dart';
+import 'package:wan_android_flutter/model/index_top_article_bean.dart';
 import 'package:wan_android_flutter/network/Address.dart';
 import 'package:wan_android_flutter/network/DataHelper.dart';
 import 'package:wan_android_flutter/network/HttpManager.dart';
@@ -50,12 +51,12 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _bannerList.add(null);
+//    _bannerList.add(null);
 
     showLoading().then((value) {
       getBannerList();
-//      getTopArticleList();
-      getArticleList();
+      getTopArticleList();
+//      getArticleList();
     });
 
     _scrollController.addListener(() {
@@ -89,11 +90,16 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   Future getTopArticleList() async {
     ResultData resultData = await new HttpManager()
         .get(Address.INDEX_TOP_ARTICLE_LIST, DataHelper.getBaseMap());
-    IndexArticleBean indexArticleBean =
-        new IndexArticleBean.fromJson(resultData.data);
-    if (indexArticleBean.data.datas.length > 0) {
-      indexArticleBean.data.datas.forEach((v) {});
+    IndexTopArticleBean indexTopArticleBean =
+        new IndexTopArticleBean.fromJson(resultData.data);
+    if (indexTopArticleBean.data.length > 0) {
+      indexTopArticleBean.data.forEach((v) {
+        v.top = true;
+      });
+      _articleList.clear();
+      _articleList.addAll(indexTopArticleBean.data);
     }
+    getArticleList();
   }
 
   Future getArticleList() async {
@@ -138,7 +144,7 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
         header: MaterialClassicHeader(),
         footer: RefreshFooter(),
         controller: _refreshController,
-        onRefresh: getArticleList,
+        onRefresh: getTopArticleList,
         onLoading: getMoreArticleList,
         child: ListView.builder(
           itemBuilder: itemView,
@@ -164,8 +170,8 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
   void onClickErrorWidget() {
     showLoading().then((value) {
       getBannerList();
-//      getTopArticleList();
-      getArticleList();
+      getTopArticleList();
+//      getArticleList();
     });
   }
 
@@ -212,6 +218,8 @@ class HomeScreenState extends BaseWidgetState<HomeScreen> {
 
   @override
   void dispose() {
+    _refreshController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 }
